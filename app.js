@@ -6,6 +6,11 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
+const pv = require('./middleware/koa-pv')
+const m2 = require('./middleware/m2')
+const m = require('./middleware/m')
+const m3 = require('./middleware/m3')
+
 const index = require('./routes/index')
 const users = require('./routes/users')
 
@@ -18,6 +23,10 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
+app.use(pv())
+app.use(m())
+app.use(m2())
+app.use(m3())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
