@@ -1,6 +1,7 @@
 const router = require('koa-router')()
+const Redis = require('koa-redis')
 const Person = require('../dbs/models/person')
-
+const Store = new Redis().client
 router.prefix('/users')
 
 router.get('/', function (ctx, next) {
@@ -10,6 +11,14 @@ router.get('/', function (ctx, next) {
 router.get('/bar', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
+
+router.get('/fix',async function (ctx,next) {
+  const st = await Store.set('fix','name'+Math.random())
+    ctx.body = {
+      code: 0
+    }
+})
+
 
 router.post('/addPerson',async function (ctx) {
   const person = new Person({

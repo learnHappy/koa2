@@ -1,6 +1,6 @@
 function pv(ctx) {
+    ctx.session.count++
     global.console.info(ctx.path)
-
 }
 
 module.exports = function () {
