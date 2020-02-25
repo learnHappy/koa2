@@ -14,6 +14,9 @@ const m3 = require('./middleware/m3')
 const index = require('./routes/index')
 const users = require('./routes/users')
 
+const mongoose = require('mongoose')
+const config = require('./dbs/config')
+
 // error handler
 onerror(app)
 
@@ -44,7 +47,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
-
+mongoose.connect(config.dbs,{useNewUrlParser:true})
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
